@@ -71,21 +71,35 @@ $(function() {
           * should have two expectations: does the menu display when
           * clicked and does it hide when clicked again.
           */
-          it('changes when icon clicked', function() {
-            var menuPos;
-            var shown;
-            $('.menu-icon-link').trigger('click');
-            shown = $('.slide-menu').style('transform');
-            console.log(shown);
-            console.log(shown[19])
-            // $('.menu-icon-link').trigger('click', function() {
-            //   menuPos = $('.slide-menu').css('transform');
-            //   console.log(menuPos);
+          describe('changes such that', function() {
+            var hidden = $('.menu-hidden');
+            // beforeEach(function() {
+            //   timerCallback = jasmine.createSpy("timerCallback");
+            //   jasmine.clock().install();
             // });
-            // expect(shown).not.toBeDefined();
-            // expect(menuPos).toBe(0);
-          })
-    })
+            // afterEach(function() {
+            //   jasmine.clock().uninstall();
+            // });
+            beforeEach(function(done) {
+              $('.menu-icon-link').trigger('click');
+              $('body').toggleClass(function() {
+                done();
+              });
+            });
+
+            it('it shows when clicked', function(done) {
+              expect(menuShown).toBeTruthy();
+              done();
+            });
+
+            it('it hides when clicked again', function(done) {
+              expect(menuShown).toBeFalsy();
+              done();
+            });
+
+
+          });
+    });
 
 
     /* TODO: Write a new test suite named "Initial Entries" */
