@@ -72,14 +72,7 @@ $(function() {
           * clicked and does it hide when clicked again.
           */
           describe('changes such that', function() {
-            var hidden = $('.menu-hidden');
-            // beforeEach(function() {
-            //   timerCallback = jasmine.createSpy("timerCallback");
-            //   jasmine.clock().install();
-            // });
-            // afterEach(function() {
-            //   jasmine.clock().uninstall();
-            // });
+
             beforeEach(function(done) {
               $('.menu-icon-link').trigger('click');
               $('body').toggleClass(function() {
@@ -101,7 +94,6 @@ $(function() {
           });
     });
 
-
     /* TODO: Write a new test suite named "Initial Entries" */
     describe('Initial Entries', function() {
 
@@ -111,8 +103,16 @@ $(function() {
          * Remember, loadFeed() is asynchronous so this test will require
          * the use of Jasmine's beforeEach and asynchronous done() function.
          */
+        beforeEach(function(done) {
+          loadFeed(0, function() {
+            done();
+          });
+        });
+        it('adds at least one .entry element to the .feed container', function(done) {
+          expect($('.feed .entry').length).toBeGreaterThan(0);
+          done();
+        });
     })
-
 
     /* TODO: Write a new test suite named "New Feed Selection" */
     describe('New Feed Selection', function() {
@@ -121,5 +121,17 @@ $(function() {
          * by the loadFeed function that the content actually changes.
          * Remember, loadFeed() is asynchronous.
          */
+        var sampleFeed;
+        beforeEach(function(done) {
+          loadFeed(0);
+          sampleFeed = $('.feed .entry').html();
+          loadFeed(1, function() {
+            done();
+          });
+        });
+        it('actually changes the feeds', function(done) {
+          expect($('.feed .entry').html()).not.toMatch(sampleFeed);
+          done();
+        });
     })
 }());
