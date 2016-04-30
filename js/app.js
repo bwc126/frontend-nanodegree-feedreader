@@ -5,7 +5,6 @@
  * use of. It also uses the Handlebars templating library and
  * jQuery.
  */
-var menuShown = false;
 // The names and URLs to all of the feeds we'd like available.
 var allFeeds = [
     {
@@ -129,12 +128,6 @@ $(function() {
      * on the body to perform the hiding/showing of our menu.
      */
     menuIcon.on('click', function() {
-      if (menuShown) {
-        menuShown = false;
-      }
-      else {
-        menuShown = true;
-      }
       $('body').toggleClass('menu-hidden');
     });
 }());

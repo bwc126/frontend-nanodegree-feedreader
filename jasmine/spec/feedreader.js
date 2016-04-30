@@ -63,8 +63,8 @@ $(function() {
          * hiding/showing of the menu element.
          */
          it('is hidden', function() {
-           expect($('.menu-hidden')).toBeDefined();
-         })
+           expect($('body').hasClass('menu-hidden')).toBe(true);
+         });
 
          /* TODO: Write a test that ensures the menu changes
           * visibility when the menu icon is clicked. This test
@@ -73,24 +73,15 @@ $(function() {
           */
           describe('changes such that', function() {
 
-            beforeEach(function(done) {
-              $('.menu-icon-link').trigger('click');
-              $('body').toggleClass(function() {
-                done();
-              });
+            beforeEach(function() {
+              $('.menu-icon-link').click();
             });
-
-            it('it shows when clicked', function(done) {
-              expect(menuShown).toBeTruthy();
-              done();
+            it('it shows when clicked', function() {
+              expect($('body').hasClass('menu-hidden')).toBe(false);
             });
-
-            it('it hides when clicked again', function(done) {
-              expect(menuShown).toBeFalsy();
-              done();
+            it('it hides when clicked again', function() {
+              expect($('body').hasClass('menu-hidden')).toBe(true);
             });
-
-
           });
     });
 
@@ -104,13 +95,10 @@ $(function() {
          * the use of Jasmine's beforeEach and asynchronous done() function.
          */
         beforeEach(function(done) {
-          loadFeed(0, function() {
-            done();
-          });
+          loadFeed(0,done);
         });
-        it('adds at least one .entry element to the .feed container', function(done) {
+        it('adds at least one .entry element to the .feed container', function() {
           expect($('.feed .entry').length).toBeGreaterThan(0);
-          done();
         });
     })
 
@@ -123,15 +111,13 @@ $(function() {
          */
         var sampleFeed;
         beforeEach(function(done) {
-          loadFeed(0);
-          sampleFeed = $('.feed .entry').html();
           loadFeed(1, function() {
-            done();
+          sampleFeed = $('.feed .entry').html();
+          loadFeed(2,done);
           });
         });
-        it('actually changes the feeds', function(done) {
+        it('actually changes the feeds', function() {
           expect($('.feed .entry').html()).not.toMatch(sampleFeed);
-          done();
         });
     })
 }());
